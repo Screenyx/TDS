@@ -26,6 +26,9 @@ export default class Ex1Controller extends Controller {
 
     @action save(){
         console.log('Test save '+this.content);
+        if(this.info !=''){
+            this.info = "Note enregistrée";
+        }
         
     }
 

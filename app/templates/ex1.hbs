@@ -4,15 +4,15 @@
         Ex1 : Notre application
     </div>
     <div class="card-body">
-        <Textarea @maxlength={{this.MAX}} class="form-control mb-3" rows="4" @value={{this.content}} />
-        <div class="alert alert-info">Il vous reste {{this.size}} caractères à saisir </div>
+        <Textarea @input={{this.update}} @maxlength={{this.MAX}} class="form-control mb-3" rows="4" @value={{this.content}} />
+        <div class="alert alert-{{this.style}}">Il vous reste {{this.size}} caractères à saisir </div>
         {{#if this.info}}
-            <div class="alert alert-{{this.style}}">{{this.info}}</div>
+            <div class="alert alert-info">{{this.info}}</div>
         {{/if}}
     </div>
 
     <div class="card-header bg-primary text-light">
-        <button class="btn btn-primary" {{action "save"}} {{action "update"}} >Enregistrer</button>
+        <button class="btn btn-primary" {{action "save"}}  >Enregistrer</button>
         <button class="btn btn-primary" {{action "supprimer"}} {{action "clear"}}>Supprimer</button>
     </div>
     
