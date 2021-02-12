@@ -1,25 +1,29 @@
-import Component from '@glimmer/component';
-import {action} from '@ember/object';
-import {tracked} from '@glimmer/tracking';
- 
-export default class MultiSelectComponent extends Component {
-  @tracked elements = [];
-  selected = [];
-  id = 'id';
- 
-  constructor() {
-    super(...arguments);
-    this.elements = this.args.elements;
-    this.selected = this.args.selected;
-    this.id = this.args.identifier || 'id';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import $ from 'jquery'
+
+export default Component.extend({
+  init() {
+    this._super(...arguments);
+    this.set('selectedIds', []);
+  },
+  tagName: 'select',
+  classNames: ['form-control'],
+  attributeBindings: ['multiple','size'],
+
+  multiple: true,
+  size: 10,
+  selectedElements: computed('selectedIds.[]', function() {
+    return this.get('selectedIds').map((id) => {
+      return this.get('elements').findBy('id', id);
+    });
+  }),
+  change(event){
+    const selectedIds = $(event.target).val();
+    this.set('selectedIds', selectedIds || []);
+  },
+  doubleClick(event){
+    const selected = $(event.target).val();
+    this.sendAction('dblClick',selected,$(event.target).closest('select').attr('id'));
   }
- 
-  @action
-  change(event) {
-    let select = event.target;
-    var selectedIds = [...select.selectedOptions].map(option => option.value);
-    if (this.args.onChange) {
-      this.args.onChange(this.elements.filter(elm => selectedIds.filter(e => e == elm[this.id]).length > 0));
-    }
-  }
-}
+});
