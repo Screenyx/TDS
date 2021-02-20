@@ -1,4 +1,4 @@
-import { tracked } from "@glimmer/tracking";
+import { tracked } from '@glimmer/tracking';
 
 export default class Services {
   services = [];
@@ -6,11 +6,15 @@ export default class Services {
   @tracked code = '';
 
   get promoValue() {
-    let check = document.getElementById("promoCheck");
+    let check = document.getElementById('promoCheck');
+    let remise = document.getElementById('remise');
 
     if (check.checked) {
       console.log('code promo : ' + this.code);
+      remise.innerHTML = 'Code promo non valide';
       if (this.code in this.promo) {
+        remise.innerHTML =
+          'Remise : ' + this.promo[this.code] * this.sumActive + ' $';
         return this.promo[this.code] * this.sumActive;
       }
     }
@@ -21,11 +25,10 @@ export default class Services {
     return this.sumActive - this.promoValue;
   }
 
-  constructor(serv,promo) {
+  constructor(serv, promo) {
     this.services = serv;
-    this.promo = promo
+    this.promo = promo;
   }
-
 
   get countActive() {
     console.log(
