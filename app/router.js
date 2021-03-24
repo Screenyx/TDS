@@ -11,4 +11,5 @@ Router.map(function () {
   this.route('logout');
   this.route('sections');
   this.route('Abstractroute');
+  this.route('order');
 });
